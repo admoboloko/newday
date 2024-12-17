@@ -1,6 +1,5 @@
 python-telegram-bot==20.0
 Flask==2.2.3
 requests==2.31.0
-Flask[async]
 werkzeug==2.2.3
 quart==0.18.0
