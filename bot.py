@@ -31,7 +31,7 @@ async def start(update: Update, context: CallbackContext):
         photo="https://imgur.com/a/6JUmXY9",
         caption="Get Ready, Get Set, Mine TON! 🚀⛏️💰\nStart your journey with **BLDX TON Miner** and unlock exciting rewards!",
         reply_markup=InlineKeyboardMarkup([
-            [InlineKeyboardButton("Open BLDX Miner", url="https://t.me/BOLDXOfficial_Bot?ref=zikky")],
+            [InlineKeyboardButton("Open BLDX Miner", url="https://t.me/BLDXTONbot")],
             [InlineKeyboardButton("Join Community", url="https://t.me/bldxtonminers")]
         ])
     )
