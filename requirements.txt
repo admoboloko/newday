@@ -2,4 +2,5 @@ python-telegram-bot==20.0
 Flask==3.0.0
 requests==2.31.0
 Flask[async]
-quart==0.18.0  # or the latest version
+werkzeug==2.2.3
+quart==0.18.0
