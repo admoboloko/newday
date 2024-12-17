@@ -1,6 +1,6 @@
 import os
 from flask import Flask, request
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, CallbackContext
 import requests
 
@@ -30,7 +30,7 @@ async def start(update: Update, context: CallbackContext):
     await update.message.reply_photo(
         photo="https://imgur.com/a/6JUmXY9",
         caption="Get Ready, Get Set, Mine TON! 🚀⛏️💰\nStart your journey with **BLDX TON Miner** and unlock exciting rewards!",
-        reply_markup=InlineKeyboardMarkup([
+        reply_markup=InlineKeyboardMarkup([ 
             [InlineKeyboardButton("Open BLDX Miner", url="https://t.me/BLDXTONbot")],
             [InlineKeyboardButton("Join Community", url="https://t.me/bldxtonminers")]
         ])
@@ -40,17 +40,17 @@ async def start(update: Update, context: CallbackContext):
 application.add_handler(CommandHandler("start", start))
 
 # Flask route for webhook
-@app.post(f"/{TOKEN}")
+@app.route(f"/{TOKEN}", methods=["POST"])  # Handle POST requests for the webhook
 async def webhook():
     """Receive updates from Telegram."""
-    update = Update.de_json(request.json, application.bot)
-    await application.process_update(update)
-    return "OK", 200
+    update = Update.de_json(request.json, application.bot)  # Parse the incoming update
+    await application.process_update(update)  # Process the update
+    return "OK", 200  # Return a response to Telegram
 
 # Set webhook at startup
 def set_webhook():
     """Tell Telegram where to send updates."""
-    webhook_url = f"https://{os.environ['RENDER_EXTERNAL_URL']}/{TOKEN}"
+    webhook_url = f"https://{os.environ['RENDER_EXTERNAL_URL']}/{TOKEN}"  # Construct webhook URL
     response = requests.post(f"https://api.telegram.org/bot{TOKEN}/setWebhook", json={"url": webhook_url})
     print("Webhook set:", response.text)
 
