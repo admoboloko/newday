@@ -47,13 +47,14 @@ async def webhook():
     await application.process_update(update)
     return "OK", 200
 
-# Set webhook automatically
-@app.before_first_request
+# Set webhook at startup
 def set_webhook():
     """Tell Telegram where to send updates."""
-    webhook_url = f"https://YOUR-RENDER-DOMAIN.onrender.com/{TOKEN}"
-    requests.post(f"https://api.telegram.org/bot{TOKEN}/setWebhook", json={"url": webhook_url})
+    webhook_url = f"https://{os.environ['RENDER_EXTERNAL_URL']}/{TOKEN}"
+    response = requests.post(f"https://api.telegram.org/bot{TOKEN}/setWebhook", json={"url": webhook_url})
+    print("Webhook set:", response.text)
 
 # Start Flask server
 if __name__ == "__main__":
+    set_webhook()  # Manually call webhook setup
     app.run(host="0.0.0.0", port=PORT)
